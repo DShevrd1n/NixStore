@@ -34,6 +34,7 @@ namespace Web
                 options.Cookie.IsEssential = true;
             });
             services.AddSingleton<IProductRepository, ProductRepository>();
+            services.AddSingleton<IOrderRepository, OrderRepository>();
             services.AddSingleton<ProductService>();
         }
 
