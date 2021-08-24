@@ -9,7 +9,6 @@ namespace ProdStore
         Product [] GetAllByName(string partname);
         Product[] GetAllByArticul(string articul);
         Product GetById(int id);
-        
-
+        Product[] GetAllByIds(IEnumerable<int> productIds);
     }
 }

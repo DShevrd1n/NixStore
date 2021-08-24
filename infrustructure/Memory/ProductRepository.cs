@@ -1,6 +1,7 @@
 ﻿using System;
 using ProdStore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Memory
 {
@@ -19,6 +20,15 @@ namespace Memory
             return products.Where(product => product.Artucil == articul)
                            .ToArray();
         }
+
+        public Product[] GetAllByIds(IEnumerable<int> productIds)
+        {
+            var foundProducts = from product in products
+                                join productId in productIds on product.Id equals productId
+                                select product;
+            return foundProducts.ToArray();
+        }
+
         public Product[] GetAllByName(string partname)
         {
             return products.Where(product => product.Name.Contains(partname))
