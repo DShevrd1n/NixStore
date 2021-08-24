@@ -7,11 +7,13 @@ namespace ProdStore
         public int Id { get; }
         public string Artucil { get; }
         public string Name { get; }
-        public Product(int id, string articul, string name)
+        public decimal Price { get; }
+        public Product(int id, string articul, string name, decimal price)
         {
             Id = id;
             Artucil = articul;
             Name = name;
+            Price = price;
 
         }
 
