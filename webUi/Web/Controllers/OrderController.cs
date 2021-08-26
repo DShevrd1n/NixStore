@@ -2,6 +2,7 @@
 using ProdStore;
 using System.Linq;
 using Web.Models;
+using System;
 
 namespace Web.Controllers
 {
@@ -90,6 +91,16 @@ namespace Web.Controllers
                 TotalCount = order.TotalCount,
                 TotalPrice = order.TotalPrice,
             };
+        }
+        public ViewResult Checkout( ShippingDetails shippingDetails)
+        {
+            if (HttpContext.Session.TryGetCart(out Cart cart))
+            {
+                var order = orderRepository.GetById(cart.OrderId);
+                return View(new ShippingDetails());
+            }
+            return View("Empty");
+
         }
     }
 }
