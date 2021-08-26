@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProdStore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Web.Models;
 
 namespace Web.Controllers
@@ -11,44 +8,66 @@ namespace Web.Controllers
     public class OrderController : Controller
     {
         private readonly IProductRepository productRepository;
-        private readonly IOrderRepository ordereRepository;
+        private readonly IOrderRepository orderRepository;
         public OrderController(IProductRepository productRepository, IOrderRepository ordereRepository)
         {
             this.productRepository = productRepository;
-            this.ordereRepository = ordereRepository;
+            this.orderRepository = ordereRepository;
         }
         public IActionResult Index()
         {
             if (HttpContext.Session.TryGetCart(out Cart cart))
             {
-               var  order = ordereRepository.GetById(cart.OrderId);
+                var order = orderRepository.GetById(cart.OrderId);
                 OrderModel orderModel = Map(order);
                 return View(orderModel);
             }
             return View("Empty");
         }
-        public IActionResult AddItem(int id)
+        public IActionResult AddItem(int id, int count = 1)
         {
-           
-            Order order;
-            Cart cart;
-            if (HttpContext.Session.TryGetCart(out cart))
-            {
-                order = ordereRepository.GetById(cart.OrderId);
-            }
-            else
-            {
-                order = ordereRepository.Create();
-                cart = new Cart(order.Id);
-            }
+            (Order order, Cart cart) = GetOrderAndCart();
             var product = productRepository.GetById(id);
-            order.AddItem(product, 1);
-            ordereRepository.Update(order);
+            order.AddOrUpdateItem(product, count);
+            SaveOrderAndCart(order, cart);
+            return RedirectToAction("Index", "Product", new { id });
+        }
+        [HttpPost]
+        public IActionResult UpdateItem(int id, int count)
+        {
+            (Order order, Cart cart) = GetOrderAndCart();
+            order.GetItem(id).Count = count;
+            SaveOrderAndCart(order, cart);
+            return RedirectToAction("Index", "Order");
+        }
+        private void SaveOrderAndCart(Order order, Cart cart)
+        {
+            orderRepository.Update(order);
             cart.TotalCount = order.TotalCount;
             cart.TotalPrice = order.TotalPrice;
             HttpContext.Session.Set(cart);
-            return RedirectToAction("Index", "Product", new {  id });
+        }
+        private (Order order, Cart cart) GetOrderAndCart()
+        {
+            Order order;
+            if (HttpContext.Session.TryGetCart(out Cart cart))
+            {
+                order = orderRepository.GetById(cart.OrderId);
+            }
+            else
+            {
+                order = orderRepository.Create();
+                cart = new Cart(order.Id);
+            }
+            return (order, cart);
+        }
+        public IActionResult RemoveItem(int id)
+        {
 
+            (Order order, Cart cart) = GetOrderAndCart();
+            order.RemoveItem(id);
+            SaveOrderAndCart(order, cart);
+            return RedirectToAction("Index", "Order");
         }
         private OrderModel Map(Order order)
         {

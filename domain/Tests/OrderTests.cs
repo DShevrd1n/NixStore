@@ -43,5 +43,26 @@ namespace Tests
             });
             Assert.Equal(2*10m + 3*5m, order.TotalPrice);
         }
+        [Fact]
+        public void GetItem_WithExistingItem_ReturnsItem()
+        {
+            var order = new Order(1, new[]
+            {
+                new OrderItem(1,3,10m),
+                new OrderItem(2,5,100m),
+            });
+            var orderItem = order.GetItem(1);
+            Assert.Equal(3, orderItem.Count);
+        }
+        [Fact]
+        public void GetItem_WithNonExistingItem_ThrowsEx()
+        {
+            var order = new Order(1, new[]
+            {
+                new OrderItem(1,3,10m),
+                new OrderItem(2,5,100m),
+            });
+                       Assert.Throws<ArgumentException>(() => { order.GetItem(100); });
+        }
     }
 }

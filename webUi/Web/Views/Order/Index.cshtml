@@ -12,6 +12,7 @@
             <th scope="col">Articul</th>
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,12 @@
             <td>@Model.Items[i].Articul</td>
             <td class="text-right">@Model.Items[i].Count</td>
             <td class="text-right">@Model.Items[i].Price</td>
+            <td class="text-center">
+                <form class="form-inline" action="@Url.Action("RemoveItem","Order")" method="post">
+                    <input type="hidden" name="id" value="@Model.Items[i].ProductId"/>
+                    <button class="btn btn-danger" type="submit">delete</button>
+                </form>
+            </td>
         </tr>
             }
     </tbody>

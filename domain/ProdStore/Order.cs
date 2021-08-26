@@ -28,21 +28,43 @@ namespace ProdStore
             Id = id;
             this.items = new List<OrderItem>(items);
         }
-        public void AddItem(Product product, int count)
+        public OrderItem GetItem(int productId)
+        {
+            int index = items.FindIndex(item => item.ProductId == productId);
+            if (index == -1)
+            {
+                throw new ArgumentException();
+            }
+            return items[index];
+        }
+        
+       public void AddOrUpdateItem(Product product, int count)
         {
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
-            var item = items.SingleOrDefault(x => x.ProductId == product.Id);
-            if (item == null)
-            {   
+            int index = items.FindIndex(item => item.ProductId == product.Id);
+            if(index == -1)
+            {
                 items.Add(new OrderItem(product.Id, count, product.Price));
             }
             else
             {
-                items.Remove(item);
-                items.Add(new OrderItem(product.Id, item.Count + count, product.Price));
+                items[index].Count += count;
             }
+           
+        }
+       
+
+        public void RemoveItem(int productId)
+        {
+            
+
+            int index = items.FindIndex(item => item.ProductId == productId);
+            if(index<=-1)
+                throw new InvalidOperationException("Order does not contain item with ID:");
+
+            items.RemoveAt(index);
         }
     }
 }
