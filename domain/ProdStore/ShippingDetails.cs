@@ -13,7 +13,7 @@ namespace ProdStore
         [Required(ErrorMessage = "Вставьте первый адрес доставки")]
         [Display(Name = "Первый адрес")]
         public string Line1 { get; set; }
-
+    
         [Required(ErrorMessage = "Укажите город")]
         [Display(Name = "Город")]
         public string City { get; set; }
