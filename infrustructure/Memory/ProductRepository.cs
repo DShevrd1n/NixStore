@@ -31,8 +31,7 @@ namespace Memory
 
         public Product[] GetAllByName(string partname)
         {
-            return products.Where(product => product.Name.Contains(partname))
-                            .ToArray();
+            return products.Where(product => product.Name.Contains(partname)).ToArray();
         }
 
         public Product GetById(int id)
