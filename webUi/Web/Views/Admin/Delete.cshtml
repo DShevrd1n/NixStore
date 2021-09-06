@@ -1,0 +1,35 @@
+﻿@model ProdStore.Data.ProductDto
+@{
+    ViewBag.Title = "Delete Product";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>Articul</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Articul)
+        </dd>
+        <dt>Price</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>Category</dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+    </dl>
+
+    <div>
+        <form asp-controller="Admin" asp-action="Delete" method="post">
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger" value="Delete" />
+            </div>
+        </form>
+    </div>
+</div>

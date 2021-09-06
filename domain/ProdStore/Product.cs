@@ -1,23 +1,39 @@
-﻿using System.Text.RegularExpressions;
+﻿using ProdStore.Data;
+using System;
+using System.Text.RegularExpressions;
 
 namespace ProdStore
 {
     public class Product
     {
-        public int Id { get; }
-        public string Artucil { get; }
-        public string Name { get; }
-        public decimal Price { get; }
-        public Product(int id, string articul, string name, decimal price)
+        private readonly ProductDto dto;
+        public int Id => dto.Id;
+        public string Articul 
         {
-            Id = id;
-            Artucil = articul;
-            Name = name;
-            Price = price;
-
+            get => dto.Articul;
+            set => dto.Articul = value;
+        }
+        public string Name
+        {
+            get => dto.Name;
+            set => dto.Name = value;
+        }
+        public decimal Price
+        {
+            get => dto.Price;
+            set => dto.Price = value;
+        }
+        public string Category
+        {
+            get => dto.Category;
+            set => dto.Category = value;
+        } 
+       internal Product(ProductDto dto)
+        {
+            this.dto = dto;
         }
 
-        internal static bool IsCode(string s)
+        public static bool IsCode(string s)
         {
             if (s == null)
                 return false;
@@ -25,6 +41,27 @@ namespace ProdStore
                 return false;
             return Regex.IsMatch(s, "^\\d{7}$");
         }
-
+        public static class DtoFactory
+        {
+            public static ProductDto Create(string articul, string name, decimal price, string category)
+            {
+                if (!Product.IsCode(articul))
+                    throw new ArgumentException(nameof(articul));
+                return new ProductDto
+                {
+                    Articul = articul,
+                    Name = name.Trim(),
+                    Price = price,
+                    Category = category.Trim(),
+                };
+            }
+        }
+        public static class Mapper
+        {
+            public static Product Map(ProductDto dto) => new Product(dto);
+            public static ProductDto Map(Product domain) => domain.dto;
+        }
     }
+   
+    
 }

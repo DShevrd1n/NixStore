@@ -1,20 +1,67 @@
-﻿@model IEnumerable<ProdStore.Product>
+﻿@using Web.Models
+@using ProdStore.Data
+@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<p><strong>Main Page</strong></p>
+<p><strong>Catalog</strong></p>
+<style>
+    @@font-face {
+        font-family: 'FontAwesome';
+        src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal
+    }
 
-@if (User.Identity.IsAuthenticated)
+    .glyphicon {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+    }
+
+    .glyphicon-chevron-right:before {
+        content: "\f054";
+    }
+
+    .glyphicon-chevron-left:before {
+        content: "\f053";
+    }
+</style>
+<table class="table">
+    <tr>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortOrder="@(Model.SortViewModel.NameSort)">Name</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.PriceSort)">Price</a>
+    </tr>
+    @foreach (ProductDto u in Model.ProductDtos)
+    {
+        <tr><td><a href="@Url.Action("Index","Product", new { id = u.Id })">@u.Name</a></td><td>@u.Price.ToString("#.##")</td></tr>
+    }
+</table>
+@if (Model.PageViewModel.HasPreviousPage)
 {
-    <p>@User.Identity.Name</p>
-
-    <form method="post" asp-controller="Account" asp-action="Logout">
-        <input type="submit" value="Выход" />
-    </form>
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn  btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        back
+    </a>
 }
-else
+@if (Model.PageViewModel.HasNextPage)
 {
-    <a asp-controller="Account" asp-action="Login">Вход</a>
-    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn btn-outline-dark">
+        forward
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
 }

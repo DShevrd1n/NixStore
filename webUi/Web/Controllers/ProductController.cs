@@ -4,20 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProdStore;
+using Store.Web.App;
 
 namespace Web.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductRepository productRepository;
-        public ProductController(IProductRepository productRepository)
+        private readonly ProductService productService;
+        public ProductController(ProductService productService)
         {
-            this.productRepository = productRepository;
+            this.productService = productService;
         }
+
         public IActionResult Index(int id)
         {
-            Product product = productRepository.GetById(id);
-            return View(product);
+            var model = productService.GetById(id);
+            return View(model);
         }
     }
 }

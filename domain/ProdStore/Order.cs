@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using ProdStore.Data;
 
 namespace ProdStore
 {
    public  class Order
     {
-        public int Id { get; }
-        private List<OrderItem> items;
-        public IReadOnlyCollection<OrderItem> Items
+        private readonly OrderDto dto;
+        public int Id => dto.Id;
+        public OrderItemCollection items { get; }
+       
+        public Order(OrderDto dto)
         {
-            get { return items; }
+            this.dto = dto;
+            items = new OrderItemCollection(dto);
         }
         public int TotalCount
         {
@@ -21,50 +25,14 @@ namespace ProdStore
         {
             get { return items.Sum(item => item.Price * item.Count); }
         }
-        public Order(int id, IEnumerable<OrderItem> items)
+        public static class DtoFactory
         {
-            if (items == null)
-                throw new ArgumentNullException(nameof(items));
-            Id = id;
-            this.items = new List<OrderItem>(items);
+            public static OrderDto Create() => new OrderDto();
         }
-        public OrderItem GetItem(int productId)
+        public static class Mapper
         {
-            int index = items.FindIndex(item => item.ProductId == productId);
-            if (index == -1)
-            {
-                throw new ArgumentException();
-            }
-            return items[index];
-        }
-        
-       public void AddOrUpdateItem(Product product, int count)
-        {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
-
-            int index = items.FindIndex(item => item.ProductId == product.Id);
-            if(index == -1)
-            {
-                items.Add(new OrderItem(product.Id, count, product.Price));
-            }
-            else
-            {
-                items[index].Count += count;
-            }
-           
-        }
-       
-
-        public void RemoveItem(int productId)
-        {
-            
-
-            int index = items.FindIndex(item => item.ProductId == productId);
-            if(index<=-1)
-                throw new InvalidOperationException("Order does not contain item with ID:");
-
-            items.RemoveAt(index);
+            public static Order Map(OrderDto dto) => new Order(dto);
+            public static OrderDto Map(Order domain) => domain.dto;
         }
     }
 }

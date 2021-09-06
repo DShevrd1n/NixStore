@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\infrustructure\Memory\Memory.csproj" />
     <ProjectReference Include="..\ProdStore\ProdStore.csproj" />
   </ItemGroup>
 

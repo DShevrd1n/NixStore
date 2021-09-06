@@ -1,7 +1,7 @@
 ﻿using ProdStore;
 
 
-namespace Web.Models
+namespace Store.Web.App
 {
     public class OrderModel
     {

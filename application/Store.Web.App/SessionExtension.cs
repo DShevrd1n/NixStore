@@ -5,11 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Web.Models;
 
-namespace Web
+
+namespace Store.Web.App
 {
-    public static  class SessionExtension
+    public static class SessionExtension
     {
         private const string key = "Cart";
         public static void Set(this ISession sesion, Cart value)
@@ -37,12 +37,8 @@ namespace Web
                     var totalCount = reader.ReadInt32();
                     var totalPrice = reader.ReadDecimal();
 
-                    value = new Cart(orderId)
-                    {
-                        TotalCount = totalCount,
-                        TotalPrice = totalPrice,
-                    };
-
+                    value = new Cart(orderId, totalCount, totalPrice);
+                 
                     return true;
                 }
             }

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using ProdStore.Data;
+using Store.Data.EF;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,17 +14,43 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private StoreDbContext db;
+        public HomeController(ILogger<HomeController> logger, StoreDbContext context)
         {
             _logger = logger;
+            db = context;
         }
-
-        public IActionResult Index()
+       
+        public async Task<IActionResult> Index(string name, int page = 1,
+            SortState sortOrder = SortState.NameAsc)
         {
-            return View();
+            int pageSize = 5;
+            IQueryable<ProductDto> products = db.Products;
+            switch (sortOrder)
+            {
+                case SortState.NameDesc:
+                    products = products.OrderByDescending(s => s.Name);
+                    break;
+                case SortState.PriceAsc:
+                    products = products.OrderBy(s => s.Price);
+                    break;
+                case SortState.PriceDesc:
+                    products = products.OrderByDescending(s => s.Price);
+                    break;
+                default:
+                    products = products.OrderBy(s => s.Name);
+                    break;
+            }
+            var count = await products.CountAsync();
+            var items = await products.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                ProductDtos = items
+            };
+            return View(viewModel);
         }
-
         
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

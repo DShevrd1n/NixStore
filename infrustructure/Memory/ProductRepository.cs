@@ -9,10 +9,10 @@ namespace Memory
     {
         private readonly Product[] products = new[]
         {
-            new Product(1,"1754844","Wine", 10.5m),
-            new Product(2,"1700244", "Beer",5.5m),
-            new Product(3,"1702844","Vodka",7.8m),
-            new Product(4,"1137844","Viski",20),
+            new Product(1,"1754844","Wine", 10.5m,"Alko"),
+            new Product(2,"1700244", "Beer",5.5m,"Alko"),
+            new Product(3,"1702844","Vodka",7.8m, "Alko"),
+            new Product(4,"1137844","Viski",20,"Alko"),
         };
 
         public Product[] GetAllByArticul(string articul)

@@ -1,0 +1,21 @@
+﻿@model ProdStore.Data.ProductDto
+@{
+    ViewBag.Title = Model.Name;
+}
+<h2>Product @Model.Name</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>Articul</dt>
+        <dd>@Model.Articul</dd>
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>Price</dt>
+        <dd>@Model.Price</dd>
+        <dt>Category</dt>
+        <dd>@Model.Category</dd>
+    </dl>
+</div>

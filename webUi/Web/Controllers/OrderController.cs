@@ -3,104 +3,60 @@ using ProdStore;
 using System.Linq;
 using Web.Models;
 using System;
+using Store.Web.App;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = "admin,user")]
     public class OrderController : Controller
     {
-        private readonly IProductRepository productRepository;
-        private readonly IOrderRepository orderRepository;
-        public OrderController(IProductRepository productRepository, IOrderRepository ordereRepository)
+        private readonly OrderService orderService;
+        public OrderController(OrderService orderService)
         {
-            this.productRepository = productRepository;
-            this.orderRepository = ordereRepository;
+            this.orderService = orderService;
         }
+        [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.TryGetCart(out Cart cart))
-            {
-                var order = orderRepository.GetById(cart.OrderId);
-                OrderModel orderModel = Map(order);
-                return View(orderModel);
-            }
+            if (orderService.TryGetModel(out OrderModel model))
+                return View(model);
             return View("Empty");
+            
         }
+
+        [HttpPost]
         public IActionResult AddItem(int id, int count = 1)
         {
-            (Order order, Cart cart) = GetOrderAndCart();
-            var product = productRepository.GetById(id);
-            order.AddOrUpdateItem(product, count);
-            SaveOrderAndCart(order, cart);
+            orderService.AddProduct(id, count);
             return RedirectToAction("Index", "Product", new { id });
         }
+
         [HttpPost]
         public IActionResult UpdateItem(int id, int count)
         {
-            (Order order, Cart cart) = GetOrderAndCart();
-            order.GetItem(id).Count = count;
-            SaveOrderAndCart(order, cart);
-            return RedirectToAction("Index", "Order");
+            var model = orderService.UpdateProduct(id, count);
+            return View("Index", model);
         }
-        private void SaveOrderAndCart(Order order, Cart cart)
-        {
-            orderRepository.Update(order);
-            cart.TotalCount = order.TotalCount;
-            cart.TotalPrice = order.TotalPrice;
-            HttpContext.Session.Set(cart);
-        }
-        private (Order order, Cart cart) GetOrderAndCart()
-        {
-            Order order;
-            if (HttpContext.Session.TryGetCart(out Cart cart))
-            {
-                order = orderRepository.GetById(cart.OrderId);
-            }
-            else
-            {
-                order = orderRepository.Create();
-                cart = new Cart(order.Id);
-            }
-            return (order, cart);
-        }
+        
+        
+        [HttpPost]
         public IActionResult RemoveItem(int id)
         {
 
-            (Order order, Cart cart) = GetOrderAndCart();
-            order.RemoveItem(id);
-            SaveOrderAndCart(order, cart);
-            return RedirectToAction("Index", "Order");
+            var model = orderService.RemoveProduct(id);
+            return View("Index", model);
         }
-        private OrderModel Map(Order order)
-        {
-            var productIds = order.Items.Select(item => item.ProductId);
-            var products = productRepository.GetAllByIds(productIds);
-            var itemModels = from item in order.Items
-                             join product in products on item.ProductId equals product.Id
-                             select new OrderItemModel
-                             {
-                                 ProductId = product.Id,
-                                 Name = product.Name,
-                                 Articul = product.Artucil,
-                                 Price = product.Price,
-                                 Count = item.Count,
-                             };
-            return new OrderModel
-            {
-                Id = order.Id,
-                Items = itemModels.ToArray(),
-                TotalCount = order.TotalCount,
-                TotalPrice = order.TotalPrice,
-            };
-        }
-        public ViewResult Checkout( ShippingDetails shippingDetails)
-        {
-            if (HttpContext.Session.TryGetCart(out Cart cart))
-            {
-                var order = orderRepository.GetById(cart.OrderId);
-                return View(new ShippingDetails());
-            }
-            return View("Empty");
+       
+        //public ViewResult Checkout( ShippingDetails shippingDetails)
+        //{
+        //    if (HttpContext.Session.TryGetCart(out Cart cart))
+        //    {
+        //        var order = orderRepository.GetById(cart.OrderId);
+        //        return View(new ShippingDetails());
+        //    }
+        //    return View("Empty");
 
-        }
+        //}
     }
 }

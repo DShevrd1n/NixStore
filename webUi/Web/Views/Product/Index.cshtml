@@ -1,11 +1,11 @@
-﻿@model ProdStore.Product
+﻿@model Store.Web.App.ProductModel
 
 @{
     ViewData["Title"] = Model.Name;
 }
 
 <h1>@Model.Name</h1>
-<p>Price <strong>@Model.Price</strong></p>
+<p>Price <strong>@Model.Price.ToString("#.##")</strong></p>
 <form action="@Url.Action("AddItem","Order")" method="post">
     <input type="hidden" name="id" value="@Model.Id" /> 
     <button class="btn btn-success" type="submit">Add to Cart</button>
