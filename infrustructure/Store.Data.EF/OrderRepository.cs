@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Store.Data.EF
 {
-    class OrderRepository : IOrderRepository
+     class OrderRepository : IOrderRepository
     {
         private readonly DbContextFactory dbContextFactory;
         public OrderRepository(DbContextFactory dbContextFactory)

@@ -5,6 +5,9 @@ using Web.Models;
 using System;
 using Store.Web.App;
 using Microsoft.AspNetCore.Authorization;
+using ProdStore.Data;
+using System.Threading.Tasks;
+using Store.Data.EF;
 
 namespace Web.Controllers
 {
@@ -12,9 +15,15 @@ namespace Web.Controllers
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
-        public OrderController(OrderService orderService)
+        
+        private StoreDbContext db;
+        private readonly EmailService service;
+        public OrderController(OrderService orderService, StoreDbContext context, EmailService service)
         {
             this.orderService = orderService;
+            db = context;
+            this.service = service;
+            
         }
         [HttpGet]
         public IActionResult Index()
@@ -23,6 +32,11 @@ namespace Web.Controllers
                 return View(model);
             return View("Empty");
             
+        }
+        public IActionResult In()
+        {
+            return View("ConfirmOrder");
+
         }
 
         [HttpPost]
@@ -47,16 +61,15 @@ namespace Web.Controllers
             var model = orderService.RemoveProduct(id);
             return View("Index", model);
         }
-       
-        //public ViewResult Checkout( ShippingDetails shippingDetails)
-        //{
-        //    if (HttpContext.Session.TryGetCart(out Cart cart))
-        //    {
-        //        var order = orderRepository.GetById(cart.OrderId);
-        //        return View(new ShippingDetails());
-        //    }
-        //    return View("Empty");
+        public IActionResult Finish(string cellPhone, string adress, string paymentType,string email)
+        {
+            orderService.FinishOrder(cellPhone,adress,paymentType);
+            service.Send(email);
+            
+            return View("Empty");
+        }
+        
 
-        //}
+
     }
 }

@@ -10,6 +10,21 @@ namespace ProdStore
     {
         private readonly OrderDto dto;
         public int Id => dto.Id;
+        public string CellPhone 
+        {
+            get => dto.CellPhone;
+            set => dto.CellPhone = value;
+        }
+        public string Adress 
+        {
+            get => dto.Adress;
+            set => dto.Adress = value;
+        }
+        public string PaymentType 
+        {
+            get => dto.PaymentType;
+            set => dto.PaymentType = value;
+        }
         public OrderItemCollection items { get; }
        
         public Order(OrderDto dto)

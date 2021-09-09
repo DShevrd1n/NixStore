@@ -49,6 +49,7 @@ namespace Web
            
             services.AddSingleton<ProductService>();
             services.AddSingleton<OrderService>();
+            services.AddTransient<EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

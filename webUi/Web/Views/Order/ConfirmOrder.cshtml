@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Confirmation";
+}
+<h2>Оформить заказ сейчас</h2>
+<p>Пожалуйста введи ваши контактные данные, и мы сразу отправим товар!</p>
+
+<form class="form-inline" action="@Url.Action("Finish", "Order")" method="post">
+    <h3>Данные</h3>
+    <div class="form-group">
+        <label>Ваш номер телефона:</label>
+        <input type="text" name="cellPhone" pattern="0[0-9]{9}" value="" placeholder="0xx-xxx-xx-xx" />
+    </div>
+
+
+    <label>Введите адресс доставки:</label>
+    <input type="text" name="adress" value="" placeholder="Адрес" />
+
+
+    <p>
+        <label>Выберите способ оплаты</label>
+        <input type="radio" name="paymentType" value="Card" /> Kartochkoi<br />
+        <input type="radio" name="paymentType" value="Cash" /> Nalichkoi<br />
+    </p>
+
+    <input type="hidden" name="email" value="@User.Identity.Name" />
+    <button class="btn btn-primary" type="submit">SubmitOrder</button>
+</form>
+

@@ -29,17 +29,7 @@ namespace Store.Web.App
             model = null;
             return false;
         }
-        internal bool TryGetOrder(out Order order)
-        {
-            if (Session.TryGetCart(out Cart cart))
-            {
-                order = orderRepository.GetById(cart.OrderId);
-                return true;
-            }
-            order = null;
-            return false;
-
-        }
+        
         internal OrderModel Map(Order order)
         {
             var products = GetProducts(order);
@@ -115,6 +105,16 @@ namespace Store.Web.App
 
             return Map(order);
         }
+        public OrderModel FinishOrder(string cellPhone,string adress,string paymentType)
+        {
+           
+            var order = GetOrder();
+            order.Adress = adress;order.CellPhone = cellPhone;order.PaymentType=paymentType;
+            orderRepository.Update(order);
+            Session.RemoveCart();
+            return Map(order);
+            
+        }
 
         public Order GetOrder()
         {
@@ -122,6 +122,17 @@ namespace Store.Web.App
                 return order;
 
             throw new InvalidOperationException("Empty session.");
+        }
+        internal bool TryGetOrder(out Order order)
+        {
+            if (Session.TryGetCart(out Cart cart))
+            {
+                order = orderRepository.GetById(cart.OrderId);
+                return true;
+            }
+            order = null;
+            return false;
+
         }
     }
 }

@@ -26,6 +26,15 @@ namespace Store.Data.EF.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CellPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -124,6 +133,54 @@ namespace Store.Data.EF.Migrations
                             Category = "Fruit",
                             Name = "Oranje",
                             Price = 8.1m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Articul = "9805246",
+                            Category = "Liquid",
+                            Name = "Pepsi",
+                            Price = 17.54m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Articul = "0018539",
+                            Category = "Liquid",
+                            Name = "Fanta",
+                            Price = 24.7m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Articul = "4396524",
+                            Category = "Cheeze",
+                            Name = "Mozzarella",
+                            Price = 51.99m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Articul = "4028609",
+                            Category = "Sweet",
+                            Name = "Snikers",
+                            Price = 24.59m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Articul = "5745016",
+                            Category = "Sweet",
+                            Name = "Orbit",
+                            Price = 10.39m
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Articul = "9002917",
+                            Category = "Sweet",
+                            Name = "lion",
+                            Price = 7.8m
                         });
                 });
 
