@@ -33,7 +33,9 @@ namespace Store.Web.App
                 Articul = product.Articul,
                 Name=product.Name,
                 Price=product.Price,
-                Category=product.Category
+                Category=product.Category,
+                Image=product.Image,
+                Volume = product.Volume
             };
         }
     }

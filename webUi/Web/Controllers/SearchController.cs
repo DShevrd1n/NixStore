@@ -18,6 +18,7 @@ namespace Web.Controllers
         }
         public async Task<IActionResult> Index(string query)
         {
+            
             var products = await productService.GetAllByQueryAsync(query);
             return View("Index", products);
         }

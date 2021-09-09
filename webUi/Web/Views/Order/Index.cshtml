@@ -40,13 +40,12 @@
             <td class="text-right">@Model.TotalCount</td>
             <td class="text-right">@Model.TotalPrice</td>
             <td class="text-center">
-                @for (int i = 0; i < Model.Items.Length; i++)
-                {
+                
                     <form class="form-inline" action="@Url.Action("Confirm", "Order")" method="post">
                         
                         <button class="btn btn-primary" type="submit">SubmitOrder</button>
                     </form>
-                }
+                
                 </td>
         </tr>
     </tfoot>

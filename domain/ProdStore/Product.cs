@@ -23,12 +23,22 @@ namespace ProdStore
             get => dto.Price;
             set => dto.Price = value;
         }
+        public string Image
+        {
+            get => dto.Image;
+            set => dto.Image = value;
+        }
         public string Category
         {
             get => dto.Category;
             set => dto.Category = value;
-        } 
-       internal Product(ProductDto dto)
+        }
+        public string Volume
+        {
+            get => dto.Volume;
+            set => dto.Volume = value;
+        }
+        internal Product(ProductDto dto)
         {
             this.dto = dto;
         }

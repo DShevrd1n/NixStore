@@ -35,7 +35,7 @@ namespace Web.Controllers
                 UserDto user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
+                    
                     user = new UserDto { Email = model.Email, Password = model.Password };
                     RoleDto userRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
@@ -44,13 +44,14 @@ namespace Web.Controllers
                     db.Users.Add(user);
                     await db.SaveChangesAsync();
 
-                    await Authenticate(user); // аутентификация
+                    await Authenticate(user); 
 
                     return RedirectToAction("Index", "Home");
                 }
                 else
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
+            
             return View(model);
         }
         [HttpGet]

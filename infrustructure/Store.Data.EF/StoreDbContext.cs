@@ -61,7 +61,8 @@ namespace Store.Data.EF
                                     Articul = "6589100",
                                     Name = "Cake",
                                     Price = 17.2m,
-                                    Category = "Sweet"
+                                    Category = "Sweet",
+                                    Image= "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -69,7 +70,8 @@ namespace Store.Data.EF
                                     Articul = "5232178",
                                     Name = "Water",
                                     Price = 7.8m,
-                                    Category = "Liquid"
+                                    Category = "Liquid",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -77,7 +79,8 @@ namespace Store.Data.EF
                                     Articul = "7895030",
                                     Name = "Candies",
                                     Price = 9.5m,
-                                    Category = "Sweet"
+                                    Category = "Sweet",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -85,7 +88,8 @@ namespace Store.Data.EF
                                     Articul = "0013872",
                                     Name = "Juice",
                                     Price = 5.2m,
-                                    Category = "Liquid"
+                                    Category = "Liquid",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -93,7 +97,8 @@ namespace Store.Data.EF
                                     Articul = "8999741",
                                     Name = "Oranje",
                                     Price = 8.1m,
-                                    Category = "Fruit"
+                                    Category = "Fruit",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -101,7 +106,8 @@ namespace Store.Data.EF
                                     Articul = "9805246",
                                     Name = "Pepsi",
                                     Price = 17.54m,
-                                    Category = "Liquid"
+                                    Category = "Liquid",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -109,7 +115,8 @@ namespace Store.Data.EF
                                     Articul = "0018539",
                                     Name = "Fanta",
                                     Price = 24.7m,
-                                    Category = "Liquid"
+                                    Category = "Liquid",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -117,7 +124,8 @@ namespace Store.Data.EF
                                     Articul = "4396524",
                                     Name = "Mozzarella",
                                     Price = 51.99m,
-                                    Category = "Cheeze"
+                                    Category = "Cheeze",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -125,7 +133,8 @@ namespace Store.Data.EF
                                     Articul = "4028609",
                                     Name = "Snikers",
                                     Price = 24.59m,
-                                    Category = "Sweet"
+                                    Category = "Sweet",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -133,7 +142,8 @@ namespace Store.Data.EF
                                     Articul = "5745016",
                                     Name = "Orbit",
                                     Price =10.39m ,
-                                    Category = "Sweet"
+                                    Category = "Sweet",
+                                    Image = "/img/1.jpg"
                                 },
                                 new ProductDto
                                 {
@@ -141,7 +151,8 @@ namespace Store.Data.EF
                                     Articul = "9002917",
                                     Name = "lion",
                                     Price = 7.8m,
-                                    Category = "Sweet"
+                                    Category = "Sweet",
+                                    Image = "/img/1.jpg"
                                 }
                                 );
             });

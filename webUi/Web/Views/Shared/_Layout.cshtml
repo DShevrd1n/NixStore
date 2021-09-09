@@ -8,27 +8,53 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <style>
+        .username {
+            margin-left: 15px;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            margin-right: 5px;
+            font-family:Verdana;
+        }
+        #login{
+            margin:5px;
+        }
+        #Reg {
+            margin: 5px;
+        }
+        
+        footer {
+            
+            color:black !important; 
+        }
+        .navbar-brand {
+            color: black !important;
+            font-size: 20px;
+            margin-right: 100px;
+        }
+        
+    </style>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Store</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NixStore</a>
                 <form class="form-inline my-2 my-lg-0" action="@Url.Action("Index", "Search")" method="get">
-                    <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search" value="" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="text" name="query" placeholder="Поиск" value="" />
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
                 </form>
                 <span class="navbar-text ml-auto">
                     @{
 
                         if (Context.Session.TryGetCart(out Cart cart) && cart.TotalCount > 0)
                         {
-                            <a href="@Url.Action("Index","Order")">Goods @cart.TotalCount on @cart.TotalPrice.ToString("#.##")</a>
+                            <a href="@Url.Action("Index","Order")">Продуктов @cart.TotalCount на @cart.TotalPrice.ToString("#.##")</a>
                         }
 
 
 
                         else
                         {
-                            <a href="@Url.Action("Index","Order")">Cart is empty</a>
+                            <a href="@Url.Action("Index","Order")">Корзина пуста</a>
 
                         }
 
@@ -38,16 +64,16 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <p>@User.Identity.Name</p>
+                    <p class="username">@User.Identity.Name</p>
 
                     <form method="post" asp-controller="Account" asp-action="Logout">
-                        <input type="submit" value="Выход" />
+                        <input type="submit" value="Выйти" />
                     </form>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login">Вход</a>
-                    <a asp-controller="Account" asp-action="Register">Регистрация</a>
+                    <a id="login" asp-controller="Account" asp-action="Login">Вход</a>
+                    <a id="Reg" asp-controller="Account" asp-action="Register">Регистрация</a>
                 }
             </div>
         </nav>
@@ -56,16 +82,18 @@
 
     <div class="container">
         <main>
-        
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-           
-        </div>
-    </footer>
+    <div class="container-fluid">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <p class="col-md-4 mb-0 text-muted">All rights reserved </p>
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a  class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+            </ul>
+        </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

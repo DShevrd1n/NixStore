@@ -60,12 +60,13 @@ namespace Web.Controllers
             var model = await orderService.RemoveProductAsync(id);
             return View("Index", model);
         }
+       
         public async Task<IActionResult> FinishAsync(string cellPhone, string adress, string paymentType,string email)
         {
             await orderService.FinishOrderAsync(cellPhone,adress,paymentType);
             service.Send(email);
             
-            return View("Empty");
+            return View("Final");
         }
         
 

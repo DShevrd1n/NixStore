@@ -2,28 +2,41 @@
 @{
     ViewBag.Title = "Confirmation";
 }
+<style>
+    .form-inline{
+        display:block ;
+    }
+    input{
+        margin-left:20px;
+    }
+    .input-group {
+        margin-bottom: 20px !important;
+    }
+    select{
+        margin-bottom: 20px;
+    }
+</style>
+
 <h2>Оформить заказ сейчас</h2>
 <p>Пожалуйста введи ваши контактные данные, и мы сразу отправим товар!</p>
 
 <form class="form-inline" action="@Url.Action("Finish", "Order")" method="post">
     <h3>Данные</h3>
-    <div class="form-group">
+    <div class="input-group">
         <label>Ваш номер телефона:</label>
         <input type="text" name="cellPhone" pattern="0[0-9]{9}" value="" placeholder="0xx-xxx-xx-xx" />
     </div>
-
-
-    <label>Введите адресс доставки:</label>
-    <input type="text" name="adress" value="" placeholder="Адрес" />
-
-
-    <p>
-        <label>Выберите способ оплаты</label>
-        <input type="radio" name="paymentType" value="Card" /> Kartochkoi<br />
-        <input type="radio" name="paymentType" value="Cash" /> Nalichkoi<br />
-    </p>
-
-    <input type="hidden" name="email" value="@User.Identity.Name" />
-    <button class="btn btn-primary" type="submit">SubmitOrder</button>
+    <div class="input-group ">
+        <label>Введите адресс доставки:</label>
+        <input type="text" name="adress" value="" placeholder="Адрес" />
+    </div>
+    <select class="form-select" name="paymentType" aria-label="Выберите способ оплаты">
+        <option value="Card">Оплата картой</option>
+        <option value="Cash">Наличный расчет</option>
+    </select>
+    <div class="input-group ">
+        <input type="hidden" name="email" value="@User.Identity.Name" />
+        <button class="btn btn-primary" type="submit">Submit Order</button>
+    </div>
 </form>
 

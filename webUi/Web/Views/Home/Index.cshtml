@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<p><strong>Catalog</strong></p>
+<H1>Каталог товаров</H1>
 <style>
     @@font-face {
         font-family: 'FontAwesome';
@@ -26,25 +26,56 @@
     .glyphicon-chevron-right:before {
         content: "\f054";
     }
-
+    
+   
     .glyphicon-chevron-left:before {
         content: "\f053";
     }
-</style>
-<table class="table">
-    <tr>
-        <th>
-            <a asp-action="Index"
-               asp-route-sortOrder="@(Model.SortViewModel.NameSort)">Name</a>
-        </th>
-        <th>
-            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.PriceSort)">Price</a>
-    </tr>
-    @foreach (ProductDto u in Model.ProductDtos)
-    {
-        <tr><td><a href="@Url.Action("Index","Product", new { id = u.Id })">@u.Name</a></td><td>@u.Price.ToString("#.##")</td></tr>
+    img{
+        width:300px;
+        height:400px;
     }
-</table>
+    .card{
+        margin:20px;
+    }
+    #filter{
+        margin-left:20px;
+    }
+</style>
+<a asp-action="Index"  asp-route-sortOrder="@(Model.SortViewModel.PriceSort)">Сортировать по цене</a>
+<a asp-action="Index"  asp-route-sortOrder="@(Model.SortViewModel.NameSort)">Сортировать по имени</a>
+<form method="get">
+    <div class="form-inline form-group">
+        <select name="category">
+            <option value="">          </option>
+            <option value="Сладости">Сладости</option>
+            <option value="Напитки">Напитки</option>
+            <option value="Сыр">Сыр</option>
+        </select>
+
+        <input id="filter" type="submit" value="Фильтр" class="btn btn-outline-dark btn-sm" />
+    </div>
+</form>
+<div class="row mt-5 mb-2">
+    @{
+        foreach (ProductDto u in Model.ProductDtos)
+        {
+            
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@u.Image" alt="@u.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@u.Name</h5>
+                    <p>Цена: @u.Price.ToString("#.##") грн </p>
+                    <p >@u.Volume</p>
+                    <a href="@Url.Action("Index","Product", new { id = u.Id })" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+
+        }
+    }
+
+</div>
 @if (Model.PageViewModel.HasPreviousPage)
 {
     <a asp-action="Index"

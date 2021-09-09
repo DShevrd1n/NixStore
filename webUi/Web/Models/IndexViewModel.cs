@@ -11,5 +11,6 @@ namespace Web.Models
         public IEnumerable<ProductDto> ProductDtos { get; set; }
         public PageViewModel PageViewModel { get; set; }
         public SortViewModel SortViewModel { get; set; }
+        public string Category { get; set; }
     }
 }
