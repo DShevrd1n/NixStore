@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Store.Web.App
 {
@@ -14,17 +15,16 @@ namespace Store.Web.App
         {
             this.productRepository = productRepository;
         }
-        public ProductModel GetById(int id)
+        public async Task<ProductModel> GetByIdAsync(int id)
         {
-            var product = productRepository.GetById(id);
+            var product = await productRepository.GetByIdAsync(id);
             return Map(product);
         }
-        public IReadOnlyCollection<ProductModel>  GetAllByQuery(string query)
+        public async Task<IReadOnlyCollection<ProductModel>>  GetAllByQueryAsync(string query)
         {
-            var products = Product.IsCode(query)? productRepository.GetAllByArticul(query): productRepository.GetAllByName(query);
+            var products = Product.IsCode(query)? await productRepository.GetAllByArticulAsync(query): await productRepository.GetAllByNameAsync(query);
             return products.Select(Map).ToArray();
         }
-
         private ProductModel Map(Product product )
         {
             return new ProductModel

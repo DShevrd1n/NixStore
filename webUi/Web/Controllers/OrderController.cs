@@ -15,55 +15,54 @@ namespace Web.Controllers
     public class OrderController : Controller
     {
         private readonly OrderService orderService;
-        
-        private StoreDbContext db;
         private readonly EmailService service;
-        public OrderController(OrderService orderService, StoreDbContext context, EmailService service)
+        public OrderController(OrderService orderService, EmailService service)
         {
             this.orderService = orderService;
-            db = context;
             this.service = service;
             
         }
+
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (orderService.TryGetModel(out OrderModel model))
+            var (hasValue, model) = await orderService.TryGetModelAsync();
+            if (hasValue)
                 return View(model);
             return View("Empty");
             
         }
-        public IActionResult In()
+        public IActionResult Confirm()
         {
             return View("ConfirmOrder");
 
         }
 
         [HttpPost]
-        public IActionResult AddItem(int id, int count = 1)
+        public async Task<IActionResult> AddItemAsync(int id, int count = 1)
         {
-            orderService.AddProduct(id, count);
+            await orderService.AddProductAsync(id, count);
             return RedirectToAction("Index", "Product", new { id });
         }
 
         [HttpPost]
-        public IActionResult UpdateItem(int id, int count)
+        public async Task<IActionResult> UpdateItemAsync(int id, int count)
         {
-            var model = orderService.UpdateProduct(id, count);
+            var model = await orderService.UpdateProductAsync(id, count);
             return View("Index", model);
         }
         
         
         [HttpPost]
-        public IActionResult RemoveItem(int id)
+        public async Task<IActionResult> RemoveItem(int id)
         {
 
-            var model = orderService.RemoveProduct(id);
+            var model = await orderService.RemoveProductAsync(id);
             return View("Index", model);
         }
-        public IActionResult Finish(string cellPhone, string adress, string paymentType,string email)
+        public async Task<IActionResult> FinishAsync(string cellPhone, string adress, string paymentType,string email)
         {
-            orderService.FinishOrder(cellPhone,adress,paymentType);
+            await orderService.FinishOrderAsync(cellPhone,adress,paymentType);
             service.Send(email);
             
             return View("Empty");

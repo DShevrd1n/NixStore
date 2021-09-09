@@ -1,13 +1,14 @@
 ﻿    using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ProdStore
 {
    public  interface IOrderRepository
     {
-        Order Create();
-        Order GetById(int id);
-        void Update(Order order);
+        Task<Order> CreateAsync();
+        Task<Order> GetByIdAsync(int id);
+        Task UpdateAsync(Order order);
     }
 }

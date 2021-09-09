@@ -15,10 +15,9 @@ namespace Web.Controllers
         {
             this.productService = productService;
         }
-
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index(int id)
         {
-            var model = productService.GetById(id);
+            var model = await productService.GetByIdAsync(id);
             return View(model);
         }
     }

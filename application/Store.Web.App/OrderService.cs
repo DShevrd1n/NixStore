@@ -3,7 +3,7 @@ using ProdStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace Store.Web.App
 {
@@ -19,20 +19,16 @@ namespace Store.Web.App
             this.orderRepository = orderRepository;
             this.httpContextAccessor = httpContextAccessor;
         }
-        public bool TryGetModel(out OrderModel model)
+        public async Task<(bool hasValue,OrderModel model)> TryGetModelAsync()
         {
-            if (TryGetOrder(out Order order))
-            {
-                model = Map(order);
-                return true;
-            }
-            model = null;
-            return false;
+            var (hasValue, order) = await TryGetOrderAsync();
+            if (hasValue)
+                return (true, await MapAsync(order));
+            return (false, null);
         }
-        
-        internal OrderModel Map(Order order)
+        internal async Task<OrderModel> MapAsync(Order order)
         {
-            var products = GetProducts(order);
+            var products = await GetProductsAsync(order);
             var items = from item in order.items
                         join product in products on item.ProductId equals product.Id
                         select new OrderItemModel
@@ -52,87 +48,83 @@ namespace Store.Web.App
                 TotalPrice = order.TotalPrice,
             };
         }
-
-        private IEnumerable<Product> GetProducts(Order order)
+        private async Task<IEnumerable<Product>> GetProductsAsync(Order order)
         {
             var productIds = order.items.Select(item => item.ProductId);
-            return productRepository.GetAllByIds(productIds);
+            return await productRepository.GetAllByIdsAsync(productIds);
         }
-        public OrderModel AddProduct(int productId, int count)
+        public async Task<OrderModel> AddProductAsync(int productId, int count)
         {
             if (count < 1)
                 throw new InvalidOperationException(nameof(count));
-            if (!TryGetOrder(out Order order))
-                order = orderRepository.Create();
+            var (hasValue, order) =await TryGetOrderAsync();
+            if (!hasValue)
+                order = await orderRepository.CreateAsync();
 
-            AddOrUpdateProduct(order, productId, count);
+            await AddOrUpdateProductAsync(order, productId, count);
             UpdateSession(order);
 
-            return Map(order);
+            return await MapAsync(order);
         }
-        internal void AddOrUpdateProduct(Order order, int productId, int count)
+        internal async Task AddOrUpdateProductAsync(Order order, int productId, int count)
         {
-            var book = productRepository.GetById(productId);
+            var book = await productRepository.GetByIdAsync(productId);
             if (order.items.TryGet(productId, out OrderItem orderItem))
                 orderItem.Count += count;
             else
                 order.items.Add(book.Id, book.Price, count);
-            orderRepository.Update(order);
+           await orderRepository.UpdateAsync(order);
         }
         internal void UpdateSession(Order order)
         {
             var cart = new Cart(order.Id, order.TotalCount, order.TotalPrice);
             Session.Set(cart);
         }
-        public OrderModel UpdateProduct(int productId, int count)
+        public async Task<OrderModel> UpdateProductAsync(int productId, int count)
         {
-            var order = GetOrder();
+            var order = await GetOrderAsync();
             order.items.Get(productId).Count = count;
 
-            orderRepository.Update(order);
+            await orderRepository.UpdateAsync(order);
             UpdateSession(order);
 
-            return Map(order);
+            return await MapAsync(order);
         }
-
-        public OrderModel RemoveProduct(int productId)
+        public async Task<OrderModel> FinishOrderAsync(string cellPhone, string adress, string paymentType)
         {
-            var order = GetOrder();
+            var order = await GetOrderAsync();
+            
+            order.Adress = adress; order.CellPhone = cellPhone; order.PaymentType = paymentType;
+            await orderRepository.UpdateAsync(order);
+            Session.RemoveCart();
+            return await MapAsync(order);
+        }
+        public async Task<OrderModel> RemoveProductAsync(int productId)
+        {
+            var order = await GetOrderAsync();
             order.items.Remove(productId);
 
-            orderRepository.Update(order);
+            await orderRepository.UpdateAsync(order);
             UpdateSession(order);
 
-            return Map(order);
+            return await MapAsync (order);
         }
-        public OrderModel FinishOrder(string cellPhone,string adress,string paymentType)
+        public async Task<Order> GetOrderAsync()
         {
-           
-            var order = GetOrder();
-            order.Adress = adress;order.CellPhone = cellPhone;order.PaymentType=paymentType;
-            orderRepository.Update(order);
-            Session.RemoveCart();
-            return Map(order);
-            
-        }
-
-        public Order GetOrder()
-        {
-            if (TryGetOrder(out Order order))
+            var (hasValue, order) = await TryGetOrderAsync();
+            if (hasValue)
                 return order;
-
             throw new InvalidOperationException("Empty session.");
         }
-        internal bool TryGetOrder(out Order order)
+        internal async  Task<(bool hasValue, Order order)> TryGetOrderAsync()
         {
             if (Session.TryGetCart(out Cart cart))
             {
-                order = orderRepository.GetById(cart.OrderId);
-                return true;
+               var  order = await orderRepository.GetByIdAsync(cart.OrderId);
+                return (true, order);
             }
-            order = null;
-            return false;
-
+            
+            return (false,null);
         }
     }
 }

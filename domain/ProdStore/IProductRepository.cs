@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ProdStore
 {
     public interface IProductRepository
     {
-        Product [] GetAllByName(string partname);
-        Product[] GetAllByArticul(string articul);
-        Product GetById(int id);
-        Product[] GetAllByIds(IEnumerable<int> productIds);
+        Task<Product[]> GetAllByIdsAsync(IEnumerable<int> productIds);
+        Task<Product[]> GetAllByArticulAsync(string articul);
+        Task<Product[]> GetAllByNameAsync(string partname);
+        Task<Product> GetByIdAsync(int id);
     }
 }

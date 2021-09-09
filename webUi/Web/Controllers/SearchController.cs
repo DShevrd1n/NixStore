@@ -16,10 +16,10 @@ namespace Web.Controllers
         {
             this.productService = productService;
         }
-        public ActionResult Index(string query)
+        public async Task<IActionResult> Index(string query)
         {
-            var products = productService.GetAllByQuery(query);
-            return View(products);
+            var products = await productService.GetAllByQueryAsync(query);
+            return View("Index", products);
         }
 
 
