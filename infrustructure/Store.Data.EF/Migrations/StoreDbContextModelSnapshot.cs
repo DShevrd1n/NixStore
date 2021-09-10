@@ -104,100 +104,111 @@ namespace Store.Data.EF.Migrations
                         {
                             Id = 1,
                             Articul = "6589100",
-                            Category = "Sweet",
-                            Image = "/img/1.jpg",
-                            Name = "Cake",
-                            Price = 17.2m
+                            Category = "Сладости",
+                            Image = "https://gotoshop.ua/img/p/2020/09/121032/1834638-121032-batonchik-snickers-super-z-arakhisom-u-molochnomu-shokoladi-1125g.jpg?t=t1599687385",
+                            Name = "Батончик Snickers Super з арахісом у молочному шоколаді",
+                            Price = 17.2m,
+                            Volume = "112,5г"
                         },
                         new
                         {
                             Id = 2,
                             Articul = "5232178",
-                            Category = "Liquid",
-                            Image = "/img/1.jpg",
-                            Name = "Water",
-                            Price = 7.8m
+                            Category = "Напитки",
+                            Image = "https://www.morshynska.ua/images/products/bottle/negaz/pet_033.png",
+                            Name = "Вода мінеральна «Моршинська» негазована",
+                            Price = 7.8m,
+                            Volume = "0,5л"
                         },
                         new
                         {
                             Id = 3,
                             Articul = "7895030",
-                            Category = "Sweet",
-                            Image = "/img/1.jpg",
-                            Name = "Candies",
-                            Price = 9.5m
+                            Category = "Сладости",
+                            Image = "https://market.rukavychka.ua/image/cache/catalog/tovaru/cukerki-rafaello-150g-tm-ferrero-507030201-700x500.jpg",
+                            Name = "Цукерки Raffaello",
+                            Price = 9.5m,
+                            Volume = "150г"
                         },
                         new
                         {
                             Id = 4,
                             Articul = "0013872",
-                            Category = "Liquid",
-                            Image = "/img/1.jpg",
-                            Name = "Juice",
-                            Price = 5.2m
+                            Category = "Напитки",
+                            Image = "https://img.fozzyshop.com.ua/rivne/25416-large_default/sok-sandora-apelsinovyj-05l.jpg",
+                            Name = "Сік Sandora апельсиновий",
+                            Price = 5.2m,
+                            Volume = "1л"
                         },
                         new
                         {
                             Id = 5,
                             Articul = "8999741",
-                            Category = "Fruit",
-                            Image = "/img/1.jpg",
-                            Name = "Oranje",
-                            Price = 8.1m
+                            Category = "Напитки",
+                            Image = "https://www.korzyna.com/img/600/744/resize/6/9/694510DSCF8905.jpg",
+                            Name = "Напій Coca-Cola",
+                            Price = 8.1m,
+                            Volume = "1л"
                         },
                         new
                         {
                             Id = 6,
                             Articul = "9805246",
-                            Category = "Liquid",
-                            Image = "/img/1.jpg",
-                            Name = "Pepsi",
-                            Price = 17.54m
+                            Category = "Напитки",
+                            Image = "https://www.korzyna.com/img/600/744/resize/5/2/520407DSCF6788.jpg",
+                            Name = "Напій енергетичний Red Bull",
+                            Price = 17.54m,
+                            Volume = "0,5л"
                         },
                         new
                         {
                             Id = 7,
                             Articul = "0018539",
-                            Category = "Liquid",
-                            Image = "/img/1.jpg",
-                            Name = "Fanta",
-                            Price = 24.7m
+                            Category = "Напитки",
+                            Image = "https://images.ua.prom.st/3078569493_w700_h500_gazirovannyj-napitok-fanta.jpg",
+                            Name = "Напій Fanta Orange",
+                            Price = 24.7m,
+                            Volume = "1л"
                         },
                         new
                         {
                             Id = 8,
                             Articul = "4396524",
-                            Category = "Cheeze",
-                            Image = "/img/1.jpg",
-                            Name = "Mozzarella",
-                            Price = 51.99m
+                            Category = "Сыр",
+                            Image = "https://img2.zakaz.ua/food.1612550279.ad72436478c_2021-02-07_Tatyana_L/food.1612550279.SNCPSG10.obj.0.1.jpg.oe.jpg.pf.jpg.350nowm.jpg.350x.jpg",
+                            Name = "Сир Premialle «Фета» 45%",
+                            Price = 51.99m,
+                            Volume = "230г"
                         },
                         new
                         {
                             Id = 9,
                             Articul = "4028609",
-                            Category = "Sweet",
-                            Image = "/img/1.jpg",
-                            Name = "Snikers",
-                            Price = 24.59m
+                            Category = "Сладости",
+                            Image = "https://www.i-igrushki.ru/upload/iblock/351/351d149b382875999294dcd2ca848117.jpg",
+                            Name = " Яйце шоколадне Kinder «Сюрприз»",
+                            Price = 24.59m,
+                            Volume = "20г"
                         },
                         new
                         {
                             Id = 10,
                             Articul = "5745016",
-                            Category = "Sweet",
-                            Image = "/img/1.jpg",
-                            Name = "Orbit",
-                            Price = 10.39m
+                            Category = "Сладости",
+                            Image = "https://images.ua.prom.st/2217550375_zhevatelnaya-rezinka-orbit.jpg",
+                            Name = "Гумка жувальна Orbit Tabs «М'ята»",
+                            Price = 10.39m,
+                            Volume = "27г"
                         },
                         new
                         {
                             Id = 11,
                             Articul = "9002917",
-                            Category = "Sweet",
-                            Image = "/img/1.jpg",
-                            Name = "lion",
-                            Price = 7.8m
+                            Category = "Сладости",
+                            Image = "https://gastronom.com.ua/images/sets/803_av.jpg",
+                            Name = "Батончик Nestle Lion",
+                            Price = 7.8m,
+                            Volume = "42г"
                         });
                 });
 
