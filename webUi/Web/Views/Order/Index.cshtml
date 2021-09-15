@@ -3,16 +3,16 @@
     ViewData["Title"] = "Cart";
 }
 
-<h1>Cart</h1>
+<h1>Ваша корзина</h1>
 
 <table class="table table-sm table-striped">
     <thead class="thead-dark">
         <tr>
             <th scope="col">№</th>
-            <th scope="col">Name</th>
-            <th scope="col">Articul</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Price</th>
+            <th scope="col">Название</th>
+            <th scope="col">Артикул</th>
+            <th scope="col">Колличество</th>
+            <th scope="col">Цена</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -24,11 +24,11 @@
             <td>@Model.Items[i].Name</td>
             <td>@Model.Items[i].Articul</td>
             <td class="text-right">@Model.Items[i].Count</td>
-            <td class="text-right">@Model.Items[i].Price</td>
+            <td class="text-right">@Model.Items[i].Price.ToString("#.##") грн</td>
             <td class="text-center">
                 <form class="form-inline" action="@Url.Action("RemoveItem","Order")" method="post">
                     <input type="hidden" name="id" value="@Model.Items[i].ProductId"/>
-                    <button class="btn btn-danger" type="submit">delete</button>
+                    <button class="btn btn-danger" type="submit">Удалить</button>
                 </form>
             </td>
         </tr>
@@ -38,12 +38,12 @@
         <tr>
             <td colspan="3" class="text-right">Total</td>
             <td class="text-right">@Model.TotalCount</td>
-            <td class="text-right">@Model.TotalPrice</td>
+            <td class="text-right">@Model.TotalPrice.ToString("#.##") грн</td>
             <td class="text-center">
                 
                     <form class="form-inline" action="@Url.Action("Confirm", "Order")" method="post">
                         
-                        <button class="btn btn-primary" type="submit">SubmitOrder</button>
+                        <button class="btn btn-primary" type="submit">Подтвердить заказ</button>
                     </form>
                 
                 </td>

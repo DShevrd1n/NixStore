@@ -12,8 +12,9 @@
     .input-group {
         margin-bottom: 20px !important;
     }
-    select{
-        margin-bottom: 20px;
+    select {
+        margin-bottom: 15px;
+        margin-left: 20px;
     }
 </style>
 
@@ -30,13 +31,16 @@
         <label>Введите адресс доставки:</label>
         <input type="text" name="adress" value="" placeholder="Адрес" />
     </div>
-    <select class="form-select" name="paymentType" aria-label="Выберите способ оплаты">
-        <option value="Card">Оплата картой</option>
-        <option value="Cash">Наличный расчет</option>
-    </select>
     <div class="input-group ">
-        <input type="hidden" name="email" value="@User.Identity.Name" />
-        <button class="btn btn-primary" type="submit">Submit Order</button>
+        <label>Выберите способ оплаты:</label>
+        <select class="form-select" name="paymentType" aria-label="Выберите способ оплаты">
+            <option value="Card">Оплата картой</option>
+            <option value="Cash">Наличный расчет</option>
+        </select>
     </div>
+        <div class="input-group ">
+            <input type="hidden" name="email" value="@User.Identity.Name" />
+            <button class="btn btn-primary" type="submit">Подтвердить заказ</button>
+        </div>
 </form>
 

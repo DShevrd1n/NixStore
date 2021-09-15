@@ -16,7 +16,7 @@ namespace Store.Data.EF
         public StoreDbContext(DbContextOptions<StoreDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -47,7 +47,7 @@
 
                         if (Context.Session.TryGetCart(out Cart cart) && cart.TotalCount > 0)
                         {
-                            <a href="@Url.Action("Index","Order")">Продуктов @cart.TotalCount на @cart.TotalPrice.ToString("#.##")</a>
+                            <a href="@Url.Action("Index","Order")">Продуктов @cart.TotalCount на @cart.TotalPrice.ToString("#.##") грн</a>
                         }
 
 

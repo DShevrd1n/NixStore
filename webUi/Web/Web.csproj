@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\infrustructure\Store.Data.EF\Store.Data.EF.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
 </Project>

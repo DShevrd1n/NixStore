@@ -34,16 +34,7 @@ namespace Web.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id != null)
-            {
-                ProductDto product = await db.Products.FirstOrDefaultAsync(p => p.Id == id);
-                if (product != null)
-                    return View(product);
-            }
-            return NotFound();
-        }
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id != null)

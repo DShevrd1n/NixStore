@@ -13,7 +13,7 @@ namespace Web.Models
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])\S{1,16}$", ErrorMessage = "Некорректный формат пароля")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [Required(ErrorMessage = "Не указан пароль")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Пароли должны совпадать")]
         public string ConfirmPassword { get; set; }

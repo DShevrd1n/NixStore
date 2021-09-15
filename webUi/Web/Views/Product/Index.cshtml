@@ -27,6 +27,7 @@
     <div class="image-holder"><img src="@Model.Image" alt="@Model.Name"></div>
     <div class="container-sm">
         <h2>@Model.Name</h2>
+        <a >@Model.Articul</a>
         <h4>Цена <strong>@Model.Price.ToString("#.##")</strong> грн</h4>
         <p >@Model.Volume</p>
         <form action="@Url.Action("AddItem","Order")" method="post">
